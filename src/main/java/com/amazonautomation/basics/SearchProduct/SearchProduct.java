@@ -16,7 +16,7 @@ public class SearchProduct {
         driver.manage().window().maximize();
         Thread.sleep(10000);
 
-        WebElement searchBox= driver.findElement(By.xpath("//input[(@id='twotabsearchtextbox')]"));
+        WebElement searchBox= driver.findElement(By.xpath("//input[@id='twotabsearchtextbox']"));
         searchBox.sendKeys("Laptop");
 
         searchBox.submit();
