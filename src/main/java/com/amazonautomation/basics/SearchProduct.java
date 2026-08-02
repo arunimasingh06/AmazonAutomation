@@ -28,13 +28,32 @@ public class SearchProduct {
 
         searchBox.submit();
 
+        System.out.println("Search Submitted");
+
         WebElement firstProduct = wait.until(
                 ExpectedConditions.elementToBeClickable(
-                        By.xpath("(//div[@data-component-type='s-search-result']//h2/a)[1]")
+                        By.xpath("(//div[@data-component-type='s-search-result']//a[h2])[1]")
                 )
         );
 
         firstProduct.click();
+
+        System.out.println("Product Found");
+        String originalWindow = driver.getWindowHandle();
+
+        for (String window : driver.getWindowHandles()) {
+            if (!window.equals(originalWindow)) {
+                driver.switchTo().window(window);
+                break;
+            }
+        }
+        WebElement title = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.id("productTitle")
+                )
+        );
+
+        System.out.println(title.getText());
 
     }
 }
