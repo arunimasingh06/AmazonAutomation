@@ -1,0 +1,40 @@
+package com.amazonautomation.basics;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
+
+public class SearchProduct {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("https://www.amazon.in");
+
+        driver.manage().window().maximize();
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement searchBox= wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.id("twotabsearchtextbox")
+                ));
+        searchBox.sendKeys("Laptop");
+
+        searchBox.submit();
+
+        WebElement firstProduct = wait.until(
+                ExpectedConditions.elementToBeClickable(
+                        By.xpath("(//div[@data-component-type='s-search-result']//h2/a)[1]")
+                )
+        );
+
+        firstProduct.click();
+
+    }
+}
