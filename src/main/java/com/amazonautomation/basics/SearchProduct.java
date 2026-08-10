@@ -91,7 +91,7 @@ public class SearchProduct {
 //
 //
 //        System.out.println(title.getText());
-
+        driver.quit();
 
     }
 }
