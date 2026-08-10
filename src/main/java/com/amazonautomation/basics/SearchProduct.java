@@ -35,11 +35,11 @@ public class SearchProduct {
                         By.xpath("(//div[@data-component-type='s-search-result']//a[h2])[1]")
                 )
         );
-
+        String originalWindow = driver.getWindowHandle();
         firstProduct.click();
 
         System.out.println("Product Found");
-        String originalWindow = driver.getWindowHandle();
+
 
         for (String window : driver.getWindowHandles()) {
             if (!window.equals(originalWindow)) {
@@ -47,13 +47,20 @@ public class SearchProduct {
                 break;
             }
         }
+
         WebElement title = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
                         By.id("productTitle")
                 )
         );
+        WebElement price = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.cssSelector("span.a-price-whole")
+                )
+        );
 
         System.out.println(title.getText());
+        System.out.println(price.getText());
 
     }
 }
