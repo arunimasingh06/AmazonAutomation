@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
+import java.util.List;
 
 public class SearchProduct {
 
@@ -47,20 +48,30 @@ public class SearchProduct {
                 break;
             }
         }
-
         WebElement title = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
                         By.id("productTitle")
                 )
         );
-        WebElement price = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(
-                        By.cssSelector("span.a-price-whole")
-                )
-        );
+
+        List<WebElement> prices = driver.findElements(By.cssSelector("span.a-price-whole"));
+
+        System.out.println("Prices found = " + prices.size());
+
+        for (WebElement p : prices) {
+            if(p.isDisplayed()){
+                System.out.println("Visible Price:"+ p.getText());
+                break;
+            }
+        }
+        System.out.println("Current URL: " + driver.getCurrentUrl());
+        System.out.println("Current Page Title: " + driver.getTitle());
+
+        System.out.println("Product Title: " + title.getText());
+
 
         System.out.println(title.getText());
-        System.out.println(price.getText());
+
 
     }
 }
