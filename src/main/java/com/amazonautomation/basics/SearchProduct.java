@@ -28,49 +28,69 @@ public class SearchProduct {
         searchBox.sendKeys("Laptop");
 
         searchBox.submit();
-
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("//div[@data-component-type='s-search-result']")
+                )
+        );
         System.out.println("Search Submitted");
 
-        WebElement firstProduct = wait.until(
-                ExpectedConditions.elementToBeClickable(
-                        By.xpath("(//div[@data-component-type='s-search-result']//a[h2])[1]")
-                )
-        );
-        String originalWindow = driver.getWindowHandle();
-        firstProduct.click();
+//        WebElement firstProduct = wait.until(
+//                ExpectedConditions.elementToBeClickable(
+//                        By.xpath("(//div[@data-component-type='s-search-result']//a[h2])[1]")
+//                )
+//        );
+//        String originalWindow = driver.getWindowHandle();
+//        firstProduct.click();
+//
+//        System.out.println("Product Found");
+//
+//
+//        for (String window : driver.getWindowHandles()) {
+//            if (!window.equals(originalWindow)) {
+//                driver.switchTo().window(window);
+//                break;
+//            }
+//        }
+//        WebElement title = wait.until(
+//                ExpectedConditions.visibilityOfElementLocated(
+//                        By.id("productTitle")
+//                )
+//        );
 
-        System.out.println("Product Found");
+//        List<WebElement> prices = driver.findElements(By.cssSelector("span.a-price-whole"));
+//
+//        System.out.println("Prices found = " + prices.size());
+//
+//        for (WebElement p : prices) {
+//            if(p.isDisplayed()){
+//                System.out.println("Visible Price:"+ p.getText());
+//                break;
+//            }
+//        }
 
+        List<WebElement> products=
+                driver.findElements(
+                        By.xpath("//div[@data-component-type='s-search-result']//h2")
+                );
+        List<WebElement> productPrices=
+                driver.findElements(
+                        By.xpath("//div[@data-component-type='s-search-result']//span[@class='a-price-whole']")
+                );
 
-        for (String window : driver.getWindowHandles()) {
-            if (!window.equals(originalWindow)) {
-                driver.switchTo().window(window);
-                break;
-            }
-        }
-        WebElement title = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(
-                        By.id("productTitle")
-                )
-        );
+        for(int i=0;i<5 && i< products.size();i++){
+            System.out.println("Product: "+(i+1));
+            System.out.println(products.get(i).getText());
+            System.out.println("Price: "+ productPrices.get(i).getText());
 
-        List<WebElement> prices = driver.findElements(By.cssSelector("span.a-price-whole"));
-
-        System.out.println("Prices found = " + prices.size());
-
-        for (WebElement p : prices) {
-            if(p.isDisplayed()){
-                System.out.println("Visible Price:"+ p.getText());
-                break;
-            }
         }
         System.out.println("Current URL: " + driver.getCurrentUrl());
         System.out.println("Current Page Title: " + driver.getTitle());
-
-        System.out.println("Product Title: " + title.getText());
-
-
-        System.out.println(title.getText());
+//
+//        System.out.println("Product Title: " + title.getText());
+//
+//
+//        System.out.println(title.getText());
 
 
     }
