@@ -17,6 +17,5 @@ public class openInternet {
         System.out.println(dropdown.getText());
         System.out.println(select.getFirstSelectedOption().getText());
 
-
     }
 }
