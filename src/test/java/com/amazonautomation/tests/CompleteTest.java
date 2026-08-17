@@ -7,9 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 
@@ -17,7 +15,10 @@ public class CompleteTest {
 
     WebDriver driver;
     WebDriverWait wait;
-
+    @BeforeClass
+    public void beforeClass() {
+        System.out.println("=== Before Class ===");
+    }
     @BeforeMethod
     public void setUp() {
 
@@ -32,6 +33,7 @@ public class CompleteTest {
 
         driver.get("https://the-internet.herokuapp.com/login");
     }
+
 
     @Test
     public void validLoginTest() {
@@ -69,5 +71,9 @@ public class CompleteTest {
     public void tearDown() {
 
         driver.quit();
+    }
+    @AfterClass
+    public void afterClass() {
+        System.out.println("=== After Class ===");
     }
 }
