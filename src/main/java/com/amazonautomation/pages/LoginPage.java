@@ -43,8 +43,22 @@ public class LoginPage {
     }
 
     public void clickLogin() {
-        System.out.println("Clicking login button...");
+        WebDriverWait wait = new WebDriverWait(
+                driver,
+                Duration.ofSeconds(10)
+        );
+
+        wait.until(
+                ExpectedConditions.elementToBeClickable(loginButton)
+        );
+
         loginButton.click();
+    }
+
+    public void login(String user, String pass) {
+        enterUsername(user);
+        enterPassword(pass);
+        clickLogin();
     }
 
     public String getErrorMessage() {

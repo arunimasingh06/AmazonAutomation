@@ -30,10 +30,15 @@ public class LoginTest {
     @Test
     public void validLogin() {
 
-        loginPage.enterUsername("tomsmith");
-        loginPage.enterPassword("SuperSecretPassword!");
-        loginPage.clickLogin();
-        System.out.println("URL after login: " + driver.getCurrentUrl());
+        loginPage.login("tomsmith", "SuperSecretPassword!");
+
+        WebDriverWait wait = new WebDriverWait(
+                driver,
+                Duration.ofSeconds(10)
+        );
+
+        wait.until(ExpectedConditions.urlContains("/secure"));
+
         Assert.assertEquals(
                 driver.getCurrentUrl(),
                 "https://the-internet.herokuapp.com/secure"
@@ -42,9 +47,7 @@ public class LoginTest {
     @Test
     public void invalidLogin() {
 
-        loginPage.enterUsername("tomsmith");
-        loginPage.enterPassword("wrongPassword");
-        loginPage.clickLogin();
+        loginPage.login("tomsmith", "wrongPassword");
 
         String actualMessage =
                 loginPage.getErrorMessage();
