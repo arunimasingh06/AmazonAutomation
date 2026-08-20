@@ -51,7 +51,7 @@ public class LoginPage {
         wait.until(
                 ExpectedConditions.elementToBeClickable(loginButton)
         );
-
+        System.out.println("Clicking login button...");
         loginButton.click();
     }
 
