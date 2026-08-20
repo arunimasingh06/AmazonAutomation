@@ -11,11 +11,16 @@ public class ExcelReader {
         Sheet sheet = workbook.getSheet("LoginData");
         System.out.println(sheet.getSheetName());
         System.out.println("Number of rows:"+ sheet.getPhysicalNumberOfRows());
-        Row row= sheet.getRow(1);
-        Cell cell = row.getCell(0);
-        System.out.println(cell.getStringCellValue());
+        for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
 
-        System.out.println(row.getCell(0).getStringCellValue());
-        System.out.println(row.getCell(1).getStringCellValue());
+            Row row = sheet.getRow(i);
+
+            String username = row.getCell(0).getStringCellValue();
+            String password = row.getCell(1).getStringCellValue();
+
+            System.out.println("Username: " + username);
+            System.out.println("Password: " + password);
+            System.out.println("----------------------");
+        }
     }
 }
