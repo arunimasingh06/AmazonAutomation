@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import com.amazonautomation.data.LoginData;
 
 import java.time.Duration;
 
@@ -35,7 +36,7 @@ public class LoginDataDrivenTest {
 
         };
     }
-    @Test(dataProvider = "loginData")
+    @Test(dataProvider = "loginData", dataProviderClass = LoginData.class)
     public void loginTest(String username, String password,boolean expectedSuccess, String expectedMessage){
         loginPage.login(username, password);
         if (expectedSuccess){
