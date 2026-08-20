@@ -4,6 +4,7 @@ import com.amazonautomation.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
@@ -23,16 +24,23 @@ public class LoginDataDrivenTest {
     @DataProvider(name="loginData")
     public Object[][] loginData(){
         return new Object[][]{
-                {"tomsmith", "SuperSecretPassword!"},
-                {"tomsmith", "wrongPassword"},
-                {"wronguser", "SuperSecretPassword!"},
-                {"wronguser", "wrongPassword"}
+                {"tomsmith", "SuperSecretPassword!",true},
+                {"tomsmith", "wrongPassword",false},
+                {"wronguser", "SuperSecretPassword!", false},
+                {"wronguser", "wrongPassword", false}
 
         };
     }
     @Test(dataProvider = "loginData")
-    public void loginTest(String username, String password){
+    public void loginTest(String username, String password,boolean expectedSucces){
         loginPage.login(username, password);
+        if (expectedSucces){
+            Assert.assertEquals(driver.getCurrentUrl(),"https://the-internet.herokuapp.com/secure");
+        }else{
+            Assert.assertTrue(
+                    driver.getCurrentUrl().contains("/login")
+            );
+        }
         System.out.println(
                 "Username: " + username +
                         " | Password: " + password
