@@ -14,13 +14,10 @@ public class BaseTest {
     @BeforeMethod
     public void setUp() {
 
-        driver = DriverFactory.createDriver();
-
+        driver = DriverFactory.createDriver("chrome");
         driver.manage().window().maximize();
-
         driver.manage().timeouts()
                 .pageLoadTimeout(Duration.ofSeconds(20));
-
         driver.get("https://www.saucedemo.com/");
     }
 
