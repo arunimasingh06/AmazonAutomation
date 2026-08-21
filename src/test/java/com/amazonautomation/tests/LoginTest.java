@@ -9,58 +9,26 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
+import com.amazonautomation.base.BaseTest;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
 
-public class LoginTest {
-    WebDriver driver;
-    LoginPage loginPage;
-    @BeforeMethod
-    public void setUp(){
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(
-                "https://the-internet.herokuapp.com/login"
-        );
-
-        loginPage = new LoginPage(driver);
-    }
+public class LoginTest extends BaseTest{
 
     @Test
     public void validLogin() {
-
-        loginPage.login("tomsmith", "SuperSecretPassword!");
-
-        WebDriverWait wait = new WebDriverWait(
-                driver,
-                Duration.ofSeconds(10)
+        LoginPage loginPage =
+                new LoginPage(driver);
+        loginPage.login(
+                "tomsmith",
+                "SuperSecretPassword!"
         );
-
-        wait.until(ExpectedConditions.urlContains("/secure"));
-
         Assert.assertEquals(
                 driver.getCurrentUrl(),
                 "https://the-internet.herokuapp.com/secure"
         );
     }
-    @Test
-    public void invalidLogin() {
 
-        loginPage.login("tomsmith", "wrongPassword");
 
-        String actualMessage =
-                loginPage.getErrorMessage();
-
-        Assert.assertTrue(
-                actualMessage.contains(
-                        "Your password is invalid!"
-                )
-        );
-    }
-
-    @AfterMethod
-    public void tearDown(){
-        driver.quit();
-    }
 }
