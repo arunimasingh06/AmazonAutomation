@@ -1,9 +1,7 @@
 package com.amazonautomation.base;
 
-import org.openqa.selenium.PageLoadStrategy;
+import com.amazonautomation.utils.DriverFactory;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -16,24 +14,7 @@ public class BaseTest {
     @BeforeMethod
     public void setUp() {
 
-        ChromeOptions options = new ChromeOptions();
-
-        // Don't wait for every resource on the page
-        options.setPageLoadStrategy(PageLoadStrategy.EAGER);
-
-        // Disable Chrome password manager notifications
-        options.addArguments("--disable-notifications");
-
-        options.setExperimentalOption(
-                "prefs",
-                java.util.Map.of(
-                        "credentials_enable_service", false,
-                        "profile.password_manager_enabled", false,
-                        "profile.password_manager_leak_detection", false
-                )
-        );
-
-        driver = new ChromeDriver(options);
+        driver = DriverFactory.createDriver();
 
         driver.manage().window().maximize();
 
