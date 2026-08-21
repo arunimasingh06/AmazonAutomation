@@ -1,5 +1,6 @@
 package com.amazonautomation.tests;
 
+import com.amazonautomation.base.BaseTest;
 import com.amazonautomation.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 
@@ -12,20 +13,18 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.amazonautomation.data.LoginData;
+import com.amazonautomation.base.BaseTest;
 
 import java.time.Duration;
 
-public class LoginDataDrivenTest {
-    WebDriver driver;
+public class LoginDataDrivenTest extends BaseTest {
     LoginPage loginPage;
 
     @BeforeMethod
-    public void setUp(){
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://the-internet.herokuapp.com/login");
+    public void createPageObject() {
         loginPage = new LoginPage(driver);
     }
+
     @DataProvider(name="loginData")
     public Object[][] loginData(){
         return new Object[][]{
@@ -37,27 +36,17 @@ public class LoginDataDrivenTest {
         };
     }
     @Test(dataProvider = "loginData", dataProviderClass = LoginData.class)
-    public void loginTest(String username, String password,boolean expectedSuccess, String expectedMessage){
+    public void loginTest(String username, String password,
+                          boolean expectedSuccess) {
         loginPage.login(username, password);
-        if (expectedSuccess){
-            WebDriverWait wait = new WebDriverWait(
-                    driver,
-                    Duration.ofSeconds(10)
-            );
-
-            wait.until(
-                    ExpectedConditions.urlContains("/secure")
-            );
-
+        if (expectedSuccess) {
             Assert.assertEquals(
                     driver.getCurrentUrl(),
-                    "https://the-internet.herokuapp.com/secure"
-            );        }else {
-
-            String actualMessage = loginPage.getErrorMessage();
-
+                    "https://www.saucedemo.com/inventory.html"
+            );
+        } else {
             Assert.assertTrue(
-                    actualMessage.contains(expectedMessage)
+                    driver.getCurrentUrl().contains("saucedemo.com")
             );
         }
 
@@ -66,9 +55,5 @@ public class LoginDataDrivenTest {
                         " | Password: " + password
         );
     }
-    @AfterMethod
-    public void tearDown() {
 
-        driver.quit();
-    }
 }

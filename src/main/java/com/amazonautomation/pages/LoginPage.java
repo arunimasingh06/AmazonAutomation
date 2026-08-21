@@ -14,13 +14,13 @@ import java.time.Duration;
 public class LoginPage {
     WebDriver driver;
 
-    @FindBy(id = "username")
+    @FindBy(id = "user-name")
     WebElement username;
 
     @FindBy(id = "password")
     WebElement password;
 
-    @FindBy(xpath = "//button[@type='submit']")
+    @FindBy(id = "login-button")
     WebElement loginButton;
 
     @FindBy(id = "flash")
