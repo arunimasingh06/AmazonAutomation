@@ -4,7 +4,7 @@ import com.amazonautomation.utils.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
+import com.amazonautomation.utils.ConfigReader;
 import java.time.Duration;
 
 public class BaseTest {
@@ -13,12 +13,22 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp() {
+        String browser = ConfigReader.getProperty("browser");
 
-        driver = DriverFactory.createDriver("chrome");
+        driver = DriverFactory.createDriver(browser);
+
         driver.manage().window().maximize();
+
+        int timeout = Integer.parseInt(
+                ConfigReader.getProperty("timeout")
+        );
+
         driver.manage().timeouts()
-                .pageLoadTimeout(Duration.ofSeconds(20));
-        driver.get("https://www.saucedemo.com/");
+                .pageLoadTimeout(Duration.ofSeconds(timeout));
+
+        String url = ConfigReader.getProperty("url");
+
+        driver.get(url);
     }
 
     @AfterMethod
